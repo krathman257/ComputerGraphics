@@ -44,13 +44,17 @@ David L. Millman, Ph.D.
 
 **Bitbucket username**: david_millman
 
+**Bitbucket email**: dmillman@gmail.com
+
 ## Grader
 
-TBA
+Adiesha Liyanaralalage
 
-**Email**: TBA
+**Email**: a.liyanaralalage@student.montana.edu
 
-**Bitbucket username**: TBA
+**Bitbucket username**: adiesha
+
+**Bitbucket email**: adiesha@gmail.com
 
 ## Textbook
 
@@ -148,23 +152,25 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 
 ### Potential Upcoming topics
 
-C++ overview
-Rasterization
-Barycentric coordinates
-Color representations
-Graphics Pipeline
-Vectors
-Affine Transformations
-OpenGL Basics
-Matrices, Rotation and Scale
-Projections
-Camera representations
-Triangulation
-Phong Shading
-Texture mapping
-Ray Tracing
-Quaternions
-Spatial Data Structure
+Below are the topics that may be covered in the future:
+
+- C++ overview
+- Rasterization
+- Barycentric coordinates
+- Color representations
+- Graphics Pipeline
+- Vectors
+- Affine Transformations
+- OpenGL Basics
+- Matrices, Rotation and Scale
+- Projections
+- Camera representations
+- Triangulation
+- Phong Shading
+- Texture mapping
+- Ray Tracing
+- Quaternions
+- Spatial Data Structure
 
 ## Catalog Information
 
