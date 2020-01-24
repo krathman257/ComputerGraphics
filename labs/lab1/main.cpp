@@ -2,43 +2,79 @@
 
 #include "bitmap_image.hpp"
 
+class Point {
+public:
+    float x;
+    float y;
+    float r;
+    float g;
+    float b;
+
+    Point() : x(0), y(0), r(0), g(0), b(0) {}
+
+    Point(float xx, float yy) : x(xx), y(yy), r(0), g(0), b(0) {}
+
+    float relativeCoord(Point a, Point b) {
+        return ((a.y - b.y) * this->x) - ((a.x - b.x) * this->y) + (a.x * b.y) - (a.y * b.x);
+    }
+
+    float beta(Point pa, Point pb, Point pc) {
+        float a = this->relativeCoord(pa, pc);
+        float b = pb.relativeCoord(pa, pc);
+        return a / b;
+    }
+
+    float gamma(Point pa, Point pb, Point pc) {
+        float a = this->relativeCoord(pa, pb);
+        float b = pc.relativeCoord(pa, pb);
+        return a / b;
+    }
+};
+
+float min(float a, float b, float c) {
+    return std::min(a, std::min(b, c));
+}
+
+float max(float a, float b, float c) {
+    return std::max(a, std::max(b, c));
+}
+
+bool ZeroToOne(float a) {
+    return 0 < a && a < 1;
+}
+
 int main(int argc, char** argv) {
-    /*
-      Prompt user for 3 points separated by whitespace.
+    std::cout << "Enter 3 points (enter a point as x y r g b):" << std::endl;
 
-      Part 1:
-          You'll need to get the x and y coordinate as floating point values
-          from the user for 3 points that make up a triangle.
+    Point p1, p2, p3;
+    std::cin >> p1.x >> p1.y >> p1.r >> p1.g >> p1.b;
+    std::cin >> p2.x >> p2.y >> p2.r >> p2.g >> p2.b;
+    std::cin >> p3.x >> p3.y >> p3.r >> p3.g >> p3.b;
 
-      Part 3:
-          You'll need to also request 3 colors from the user each having
-          3 floating point values (red, green and blue) that range from 0 to 1.
-    */
-
-    // create an image 640 pixels wide by 480 pixels tall
     bitmap_image image(640, 480);
 
-    /*
-      Part 1:
-          Calculate the bounding box of the 3 provided points and loop
-          over each pixel in that box and set it to white using:
+    float bbxMin = min(p1.x, p2.x, p3.x);
+    float bbxMax = max(p1.x, p2.x, p3.x);
+    float bbyMin = min(p1.y, p2.y, p3.y);
+    float bbyMax = max(p1.y, p2.y, p3.y);
 
-          rgb_t color = make_color(255, 255, 255);
-          image.set_pixel(x,y,color);
+    for (int x = bbxMin; x < bbxMax; x++) {
+        for (int y = bbyMin; y < bbyMax; y++) {
+            Point pt(x, y);
+            
+            float beta = pt.beta(p1, p2, p3);
+            float gamma = pt.gamma(p1, p2, p3);
+            float alpha = 1 - beta - gamma;
 
-      Part 2:
-          Modify your loop from part 1. Using barycentric coordinates,
-          determine if the pixel lies within the triangle defined by
-          the 3 provided points. If it is color it white, otherwise
-          move on to the next pixel.
-
-      Part 3:
-          For each pixel in the triangle, calculate the color based on
-          the calculated barycentric coordinates and the 3 provided
-          colors. Your colors should have been entered as floating point
-          numbers from 0 to 1. The red, green and blue components range
-          from 0 to 255. Be sure to make the conversion.
-    */
+            if (ZeroToOne(alpha) && ZeroToOne(beta) && ZeroToOne(gamma)) {
+                float red = alpha * p1.r + beta * p2.r + gamma * p3.r;
+                float blue = alpha * p1.b + beta * p2.b + gamma * p3.b;
+                float green = alpha * p1.g + beta * p2.g + gamma * p3.g;
+                rgb_t tempColor = make_colour(red * 255, blue * 255, green * 255);
+                image.set_pixel(x, y, tempColor);
+            }
+        }
+    }
 
     image.save_image("triangle.bmp");
     std::cout << "Success" << std::endl;
