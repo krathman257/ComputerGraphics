@@ -83,11 +83,11 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 
 | Date | Description                                                        | Assigned              | Due                   | Recommended Reading                           |
 |------|--------------------------------------------------------------------|-----------------------|-----------------------|-----------------------------------------------|
-| 1/14 |  Intro - applications of computer graphics                         | [Lab 0](./labs/lab0/) |                       | FoCG Chapter 1                                |
+| 1/14 | [Intro - applications of computer graphics](./notes/01-14.pdf)     | [Lab 0](./labs/lab0/) |                       | FoCG Chapter 1                                |
 | 1/16 |  C++                                                               |                       |                       |                                               |
 |      |                                                                    |                       |                       |                                               |
-| 1/21 |                                                                    | [Lab 1](./labs/lab1/) | [Lab 0](./labs/lab0/) |                                               |
-| 1/23 |                                                                    |                       |                       |                                               |
+| 1/21 | [Lin Alg, Coords](./notes/01-21.pdf)                               | [Lab 1](./labs/lab1/) | [Lab 0](./labs/lab0/) | FoCG Chapter 2 & 3                            |
+| 1/23 |  Coords & Colors                                                   |                       |                       | FoCG Chapter 2 & 3                            |
 |      |                                                                    |                       |                       |                                               |
 | 1/28 |                                                                    |  Lab 2                | [Lab 1](./labs/lab1/) |                                               |
 | 1/30 |                                                                    |                       |                       |                                               |
@@ -154,9 +154,7 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 
 Below are the topics that may be covered in the future:
 
-- C++ overview
 - Rasterization
-- Barycentric coordinates
 - Color representations
 - Graphics Pipeline
 - Vectors

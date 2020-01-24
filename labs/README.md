@@ -9,6 +9,19 @@ this repository throughout the semester so you will need to follow the
 instructions below in order to keep your repository up-to-date, while also being
 able to push changes up to your own personal repository.
 
+
+## Submission
+
+When submitting the labs please provide use the following template:
+
+**For your repo url.  Please use the ssh url (the one that ends with `.git`)**
+
+    name: <your name>
+    collab: <your collaborators>
+    cmd: git clone <url of git repo>
+    hash: <commit hash>
+
+
 ## Sign up for Bitbucket
 
 First, you'll need a Bitbucket account, so [sign up
