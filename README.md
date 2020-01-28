@@ -52,6 +52,8 @@ Adiesha Liyanaralalage
 
 **Email**: a.liyanaralalage@student.montana.edu
 
+**Office hours**: Monday 10.00 - 11.00 BARH 259
+
 **Bitbucket username**: adiesha
 
 **Bitbucket email**: adiesha@gmail.com
@@ -83,20 +85,20 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 
 | Date | Description                                                        | Assigned              | Due                   | Recommended Reading                           |
 |------|--------------------------------------------------------------------|-----------------------|-----------------------|-----------------------------------------------|
-| 1/14 | [Intro - applications of computer graphics](./notes/01-14.pdf)     | [Lab 0](./labs/lab0/) |                       | FoCG Chapter 1                                |
+| 1/14 | [Intro - applications of computer graphics](./notes/01-14.pdf)     | [Lab 0](./labs/lab0/) |                       | FoCG Ch 1                                     |
 | 1/16 |  C++                                                               |                       |                       |                                               |
 |      |                                                                    |                       |                       |                                               |
-| 1/21 | [Lin Alg, Coords](./notes/01-21.pdf)                               | [Lab 1](./labs/lab1/) | [Lab 0](./labs/lab0/) | FoCG Chapter 2 & 3                            |
-| 1/23 |  Coords & Colors                                                   |                       |                       | FoCG Chapter 2 & 3                            |
+| 1/21 | [Lin Alg, Coords](./notes/01-21.pdf)                               | [Lab 1](./labs/lab1/) | [Lab 0](./labs/lab0/) | FoCG Ch 2 & 3                                 |
+| 1/23 | [Coords & Colors](./notes/01-23.pdf)                               |                       |                       | FoCG Ch 2 & 3                                 |
 |      |                                                                    |                       |                       |                                               |
-| 1/28 |                                                                    |  Lab 2                | [Lab 1](./labs/lab1/) |                                               |
+| 1/28 | Graphics Pipeline / OpenGL Basics                                  | [Lab 2](./labs/lab2)  | [Lab 1](./labs/lab1/) | LoGL "Hello Tri", GL Ch 1, FoCG Ch 17         |
 | 1/30 |                                                                    |                       |                       |                                               |
 
 ### February
 
 | Date | Description                                                        | Assigned              | Due                   | Recommended Reading                           |
 |------|--------------------------------------------------------------------|-----------------------|-----------------------|-----------------------------------------------|
-| 2/04 |                                                                    |  Lab 3                |  Lab 2                |                                               |
+| 2/04 |                                                                    |  Lab 3                | [Lab 2](./labs/lab2)  |                                               |
 | 2/06 |                                                                    |                       |                       |                                               |
 |      |                                                                    |                       |                       |                                               |
 | 2/11 |                                                                    |  Lab 4                |  Lab 3                |                                               |
