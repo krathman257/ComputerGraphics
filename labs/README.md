@@ -12,13 +12,19 @@ able to push changes up to your own personal repository.
 
 ## Submission
 
-When submitting the labs please provide use the following template:
+When submitting the labs please tag the commit with the name of the assignment.
+E.g. `lab01` or `lab10`.
+Please make sure to use TWO digits for the number of the lab. For
+more on tagging commits, see [tagging
+tutorial](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag).
+For the submission, please use use the following template:
 
-**For your repo url.  Please use the ssh url (the one that ends with `.git`)**
+**For your repo url.  Please use the ssh url (the one that starts with
+`git@bitbucket.org:....`)**
 
     name: <your name>
     collab: <your collaborators>
-    cmd: git clone <url of git repo>
+    url: <url of git repo>
     hash: <commit hash>
 
 

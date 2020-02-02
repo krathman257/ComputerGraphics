@@ -133,7 +133,7 @@ int main(void) {
     // normalized device coordinates and color components.
     // float triangle[] = ...
 
-    /** PART2: map the data
+    /** PART2: map the data */
 
     // create vertex and array buffer objects using
     // glGenBuffers, glGenVertexArrays

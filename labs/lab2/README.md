@@ -1,7 +1,7 @@
 # Lab 2 - Hardware Rasterization
 
 *You may work in pairs on this assignment. To receive credit, demonstrate your
-completed program during lab or create a tag called `lab2` push your
+completed program during lab or create a tag called `lab02` push your
 code (and tag) up to Bitbucket and submit the hash to D2L.*
 
 In this assignment, you’ll be using OpenGL and GLSL to render a single triangle

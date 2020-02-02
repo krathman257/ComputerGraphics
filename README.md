@@ -52,7 +52,7 @@ Adiesha Liyanaralalage
 
 **Email**: a.liyanaralalage@student.montana.edu
 
-**Office hours**: Monday 10.00 - 11.00 BARH 259
+**Office hours**: Monday 10.00 - 11.00 BARH 259, Tuesday and Thursday after the class at the lecture hall.
 
 **Bitbucket username**: adiesha
 
@@ -91,8 +91,8 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 | 1/21 | [Lin Alg, Coords](./notes/01-21.pdf)                               | [Lab 1](./labs/lab1/) | [Lab 0](./labs/lab0/) | FoCG Ch 2 & 3                                 |
 | 1/23 | [Coords & Colors](./notes/01-23.pdf)                               |                       |                       | FoCG Ch 2 & 3                                 |
 |      |                                                                    |                       |                       |                                               |
-| 1/28 | Graphics Pipeline / OpenGL Basics                                  | [Lab 2](./labs/lab2)  | [Lab 1](./labs/lab1/) | LoGL "Hello Tri", GL Ch 1, FoCG Ch 17         |
-| 1/30 |                                                                    |                       |                       |                                               |
+| 1/28 | [Graphics Pipeline / OpenGL Basics](./notes/2020-01-28.pdf)        | [Lab 2](./labs/lab2)  | [Lab 1](./labs/lab1/) | LoGL "Hello Tri", GL Ch 1, FoCG Ch 17         |
+| 1/30 | [Transformations](./notes/2020-01-30.pdf)                          |                       |                       |                                               |
 
 ### February
 
