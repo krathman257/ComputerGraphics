@@ -6,11 +6,16 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-/**
- * BELOW IS A BUNCH OF HELPER CODE
- * You do not need to understand what is going on with it, but if you want to
- * know, let me know and I can walk you through it.
- */
+class Point {
+public:
+    float x;
+    float y;
+    float r;
+    float g;
+    float b;
+
+    Point() : x(0), y(0), r(0), g(0), b(0) {}
+};
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -60,7 +65,7 @@ std::string shaderTypeName(GLenum shaderType) {
     }
 }
 
-std::string readFile(const std::string& fileName) {
+std::string readFile(const char* fileName) {
     std::ifstream stream(fileName);
     std::stringstream buffer;
     buffer << stream.rdbuf();
@@ -72,19 +77,21 @@ std::string readFile(const std::string& fileName) {
     return source;
 }
 
-/** END OF CODE THAT YOU DON'T NEED TO WORRY ABOUT */
+void w2nd(float* x, float* y) {
+    *x = -1.0f + *x * (2.0f / 640.0f);
+    *y = 1.0f - *y * (2.0f / 480.0f);
+}
 
-GLuint createShader(const std::string& fileName, GLenum shaderType) {
+GLuint createShader(const char* fileName, GLenum shaderType) {
     std::string source = readFile(fileName);
     const char* src_ptr = source.c_str();
 
-    /** YOU WILL ADD CODE STARTING HERE */
     GLuint shader = 0;
-    // create the shader using
-    // glCreateShader, glShaderSource, and glCompileShader
-    /** END CODE HERE */
 
-    // Perform some simple error handling on the shader
+    shader = glCreateShader(shaderType);
+    glShaderSource(shader, 1, &src_ptr, NULL);
+    glCompileShader(shader);
+
     int success;
     char infoLog[512];
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
@@ -99,12 +106,16 @@ GLuint createShader(const std::string& fileName, GLenum shaderType) {
 }
 
 GLuint createShaderProgram(GLuint vertexShader, GLuint fragmentShader) {
-    /** YOU WILL ADD CODE STARTING HERE */
-    // create the program using glCreateProgram, glAttachShader, glLinkProgram
     GLuint program = 0;
-    /** END CODE HERE */
 
-    // Perform some simple error handling
+    program = glCreateProgram();
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragmentShader);
+    glLinkProgram(program);
+
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
     int success;
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if (!success) {
@@ -118,69 +129,62 @@ GLuint createShaderProgram(GLuint vertexShader, GLuint fragmentShader) {
 }
 
 int main(void) {
+    std::cout << "Enter 3 points (enter a point as x y r g b):" << std::endl;
+
+    Point p1, p2, p3;
+
+    std::cin >> p1.x >> p1.y >> p1.r >> p1.g >> p1.b;
+    std::cin >> p2.x >> p2.y >> p2.r >> p2.g >> p2.b;
+    std::cin >> p3.x >> p3.y >> p3.r >> p3.g >> p3.b;
+
+    w2nd(&p1.x, &p1.y);
+    w2nd(&p2.x, &p2.y);
+    w2nd(&p3.x, &p3.y);
+
+    float triangle[] = {
+        p1.x, p1.y, p1.r, p1.g, p1.b,
+        p2.x, p2.y, p2.r, p2.g, p2.b,
+        p3.x, p3.y, p3.r, p3.g, p3.b
+    };
+
     GLFWwindow* window = initWindow();
     if (!window) {
         std::cout << "There was an error setting up the window" << std::endl;
         return 1;
     }
 
-    /** YOU WILL ADD DATA INITIALIZATION CODE STARTING HERE */
-
-    /* PART1: ask the user for coordinates and colors, and convert to normalized
-     * device coordinates */
-
-    // convert the triangle to an array of floats containing
-    // normalized device coordinates and color components.
-    // float triangle[] = ...
-
-    /** PART2: map the data */
-
-    // create vertex and array buffer objects using
-    // glGenBuffers, glGenVertexArrays
     GLuint VBO[1], VAO[1];
 
-    // setup triangle using glBindVertexArray, glBindBuffer, GlBufferData
+    glGenVertexArrays(1, VAO);
+    glGenBuffers(1, VBO);
 
-    // setup the attribute pointer for the coordinates
-    // setup the attribute pointer for the colors
-    // both will use glVertexAttribPointer and glEnableVertexAttribArray;
+    glBindVertexArray(*VAO);
 
-    /** PART3: create the shader program */
+    glBindBuffer(GL_ARRAY_BUFFER, *VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
 
-    // create the shaders
-    // YOU WILL HAVE TO ADD CODE TO THE createShader FUNCTION ABOVE
-    GLuint vertexShader = createShader("../vert.glsl", GL_VERTEX_SHADER);
-    GLuint fragmentShader = createShader("../frag.glsl", GL_FRAGMENT_SHADER);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
-    // create the shader program
-    // YOU WILL HAVE TO ADD CODE TO THE createShaderProgram FUNCTION ABOVE
+    GLuint vertexShader = createShader("D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab2\\vert.glsl", GL_VERTEX_SHADER);
+    GLuint fragmentShader = createShader("D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab2\\frag.glsl", GL_FRAGMENT_SHADER);
+
     GLuint shaderProgram = createShaderProgram(vertexShader, fragmentShader);
 
-    // cleanup the vertex and fragment shaders using glDeleteShader
-
-    /** END INITIALIZATION CODE */
-
     while (!glfwWindowShouldClose(window)) {
-        // you don't need to worry about processInput, all it does is listen
-        // for the escape character and terminate when escape is pressed.
         processInput(window);
 
-        /** YOU WILL ADD RENDERING CODE STARTING HERE */
-        /** PART4: Implemting the rendering loop */
-
-        // clear the screen with your favorite color using glClearColor
+        glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // set the shader program using glUseProgram
+        glUseProgram(shaderProgram);
 
-        // bind the vertex array using glBindVertexArray
+        glBindVertexArray(*VAO);
 
-        // draw the triangles using glDrawArrays
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
-
-        /** END RENDERING CODE */
-
-        // Swap front and back buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
