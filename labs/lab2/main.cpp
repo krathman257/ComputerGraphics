@@ -168,8 +168,8 @@ int main(void) {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    GLuint vertexShader = createShader("D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab2\\vert.glsl", GL_VERTEX_SHADER);
-    GLuint fragmentShader = createShader("D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab2\\frag.glsl", GL_FRAGMENT_SHADER);
+    GLuint vertexShader = createShader("vert.glsl", GL_VERTEX_SHADER);
+    GLuint fragmentShader = createShader("frag.glsl", GL_FRAGMENT_SHADER);
 
     GLuint shaderProgram = createShaderProgram(vertexShader, fragmentShader);
 
