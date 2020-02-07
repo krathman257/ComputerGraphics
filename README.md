@@ -92,17 +92,17 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 | 1/23 | [Coords & Colors](./notes/01-23.pdf)                               |                       |                       | FoCG Ch 2 & 3                                 |
 |      |                                                                    |                       |                       |                                               |
 | 1/28 | [Graphics Pipeline / OpenGL Basics](./notes/2020-01-28.pdf)        | [Lab 2](./labs/lab2)  | [Lab 1](./labs/lab1/) | LoGL "Hello Tri", GL Ch 1, FoCG Ch 17         |
-| 1/30 | [Transformations](./notes/2020-01-30.pdf)                          |                       |                       |                                               |
+| 1/30 | [Transformations](./notes/2020-01-30.pdf)                          |                       |                       | LoGL Ch 6                                     |
 
 ### February
 
 | Date | Description                                                        | Assigned              | Due                   | Recommended Reading                           |
 |------|--------------------------------------------------------------------|-----------------------|-----------------------|-----------------------------------------------|
-| 2/04 |                                                                    |  Lab 3                | [Lab 2](./labs/lab2)  |                                               |
-| 2/06 |                                                                    |                       |                       |                                               |
+| 2/04 | [Affine Transformations](./notes/2020-02-04.pdf)                   | [Lab 3](./labs/lab3)  | [Lab 2](./labs/lab2)  | LoGL Ch 6                                     |
+| 2/06 |  Affine Transformations                                            |                       |                       | LoGL Ch 6                                     |
 |      |                                                                    |                       |                       |                                               |
-| 2/11 |                                                                    |  Lab 4                |  Lab 3                |                                               |
-| 2/13 |                                                                    |                       |                       |                                               |
+| 2/11 |  Projections                                                       |  Lab 4                | [Lab 3](./labs/lab3)  | LoGL Ch 7                                     |
+| 2/13 |  Camera                                                            |                       |                       | LoGL Ch 7                                     |
 |      |                                                                    |                       |                       |                                               |
 | 2/18 |                                                                    |  Lab 5                |  Lab 4                |                                               |
 | 2/20 |                                                                    |                       |                       |                                               |
@@ -156,16 +156,6 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 
 Below are the topics that may be covered in the future:
 
-- Rasterization
-- Color representations
-- Graphics Pipeline
-- Vectors
-- Affine Transformations
-- OpenGL Basics
-- Matrices, Rotation and Scale
-- Projections
-- Camera representations
-- Triangulation
 - Phong Shading
 - Texture mapping
 - Ray Tracing

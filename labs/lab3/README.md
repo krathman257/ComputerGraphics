@@ -13,8 +13,8 @@ In this lab, you’ll learn how to combine transformation matrices to move objec
 around in 2D space. A unit square, centered at the origin, is provided with its
 vertices set to red, green, blue, and yellow.  You’ll transform the square using
 translation, rotation and scaling matrices.  All three matrices will be combined
-in your vertex shader to transform the points in your scene.  You may NOT use a
-linear algebra library for this lab.
+in your vertex shader to transform the points in your scene.  **You may NOT use a
+linear algebra library for this lab.**
 
 ## Recommended Reading
 
