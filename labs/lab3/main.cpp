@@ -6,7 +6,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <csci441/shader.h>
+#include "csci441/Shader.h"
+#include "csci441/Vector3.h"
+#include "csci441/Matrix3.h"
+
+const float PI = 3.141592653589793;
+
+bool modeSwitch = false;
+int mode = 0;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -16,9 +23,55 @@ void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        modeSwitch = true;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE && modeSwitch) {
+        mode = (mode + 1) % 5;
+        modeSwitch = false;
+    }
+}
+
+Matrix3 createStaticMatrix() {
+    Matrix3 temp;
+    temp.toIdent();
+    return temp;
+}
+
+Matrix3 createRotateMatrix(float val) {
+    Matrix3 temp;
+    temp.toZRotation(val);
+    return temp;
+}
+
+Matrix3 createOffCenterRotateMatrix(float xVal, float yVal, float rVal) {
+    Matrix3 t_temp, r_temp;
+    t_temp.toTranslate(xVal, yVal);
+    r_temp.toZRotation(rVal);
+    Matrix3 temp3 = t_temp.multiply(r_temp);
+    return temp3;
+}
+
+Matrix3 createScaleMatrix(float val) {
+    Matrix3 temp;
+    temp.toScale(val);
+    return temp;
+}
+
+Matrix3 createImpressiveMatrix(double xVal, double yVal, float width, float height, float sVal, float* rVal) {
+    Matrix3 t_temp, r_temp, s_temp;
+    xVal = -1.0 + xVal * (2.0 / width);
+    yVal = 1.0 - yVal * (2.0 / height);
+    *rVal += 0.002 * sqrt(xVal * xVal + yVal * yVal);
+    t_temp.toTranslate(xVal / sVal, yVal / sVal);
+    r_temp.toZRotation(*rVal * 2);
+    s_temp.toScale(sVal);
+    Matrix3 final_temp = t_temp.multiply(r_temp.multiply(s_temp));
+    return final_temp;
 }
 
 int main(void) {
+
     /* Initialize the library */
     GLFWwindow* window;
     if (!glfwInit()) {
@@ -82,7 +135,9 @@ int main(void) {
     glEnableVertexAttribArray(1);
 
     // create the shaders
-    Shader shader("../vert.glsl", "../frag.glsl");
+    Shader shader("vert.glsl", "frag.glsl");
+
+    float rotateVal = 0, scaleVal = 0;
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
@@ -93,10 +148,49 @@ int main(void) {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        float timeVal = glfwGetTime();
+        Matrix3 transMat;
+
+        switch (mode) {
+
+        case 0: 
+            transMat.setArray(createStaticMatrix().m);
+            break;
+
+        case 1:
+            rotateVal += 0.0005;
+            transMat.setArray(createRotateMatrix(rotateVal).m);
+            break;
+
+        case 2:
+            rotateVal += 0.0005;
+            transMat.setArray(createOffCenterRotateMatrix(-0.5, 0.25, rotateVal).m);
+            break;
+
+        case 3:
+            scaleVal = sin(timeVal) / 2.0f + 0.75f;
+            transMat.setArray(createScaleMatrix(scaleVal).m);
+            break;
+
+        //Translate square to follow mouse cursor, fluxuate in size, rotate slower the closer it is to center
+        case 4:
+            double x, y;
+            glfwGetCursorPos(window, &x, &y);
+            GLint v[4];
+            glGetIntegerv(GL_VIEWPORT, v);
+            scaleVal = sin(timeVal * 2) / 2.0f + 0.75f;
+            transMat.setArray(createImpressiveMatrix(x, y, v[2], v[3], scaleVal, &rotateVal).m);
+            break;
+
+        default:
+            break;
+        }
+
+        int transPosLoc = glGetUniformLocation(shader.ID, "transPos");
+        glUniformMatrix3fv(transPosLoc, 1, true, transMat.m);
+
         // use the shader
         shader.use();
-
-        /** Part 2 animate and scene by updating the transformation matrix */
 
         // draw our triangles
         glBindVertexArray(VAO[0]);
