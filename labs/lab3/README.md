@@ -6,9 +6,6 @@ completed program during lab or create a tag called `lab03` push your
 code (and tag) up to Bitbucket and submit the hash to D2L prior to class on
 the due date.*
 
-**NOTE: I will post code to get you stared after class on Tue.  You may (but do
-not need to) use my code as a starting point.**
-
 In this lab, you’ll learn how to combine transformation matrices to move objects
 around in 2D space. A unit square, centered at the origin, is provided with its
 vertices set to red, green, blue, and yellow.  You’ll transform the square using
