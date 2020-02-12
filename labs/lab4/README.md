@@ -8,8 +8,6 @@ the due date.*
 
 **You may NOT use a linear algebra library for this lab.**
 
-**NOTE: Starter code will be posted after class on Tue**
-
 In this lab, we go 3D!  You will generalize the 2D transformation in the last
 lab to 3D, and implement an orthographic and perspective projections.  We will
 start with a box, you will implement either a parameterized sphere or a cylinder
