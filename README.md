@@ -101,10 +101,10 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 | 2/04 | [Affine Transformations](./notes/2020-02-04.pdf)                   | [Lab 3](./labs/lab3)  | [Lab 2](./labs/lab2)  | LoGL Ch 6                                     |
 | 2/06 |  Affine Transformations                                            |                       |                       | LoGL Ch 6                                     |
 |      |                                                                    |                       |                       |                                               |
-| 2/11 |  Projections                                                       |  Lab 4                | [Lab 3](./labs/lab3)  | LoGL Ch 7                                     |
+| 2/11 |  Projections                                                       | [Lab 4](./labs/lab4)  | [Lab 3](./labs/lab3)  | LoGL Ch 7                                     |
 | 2/13 |  Camera                                                            |                       |                       | LoGL Ch 7                                     |
 |      |                                                                    |                       |                       |                                               |
-| 2/18 |                                                                    |  Lab 5                |  Lab 4                |                                               |
+| 2/18 |                                                                    |  Lab 5                | [Lab 4](./labs/lab4)  |                                               |
 | 2/20 |                                                                    |                       |                       |                                               |
 |      |                                                                    |                       |                       |                                               |
 | 2/25 |                                                                    |  Lab 6                |  Lab 5                |                                               |
