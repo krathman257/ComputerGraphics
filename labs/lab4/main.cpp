@@ -3,6 +3,8 @@
 #include <sstream>
 #include <fstream>
 #include <cmath>
+#include <chrono>
+#include <thread>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -30,12 +32,17 @@ float posX = 0,
       rotZ = 0;
 
 float camPosStep = 0.05,
-      posStep = 0.05,
-      scalStep = 0.05,
-      rotStep = 0.05;
+    posStep = 0.05,
+    scalStep = 0.05,
+    rotStep = 0.05;
+int sleepTime = 1;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
+}
+
+void sleep(int s) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(s));
 }
 
 void processInput(GLFWwindow *window, Shader &shader) {
@@ -58,54 +65,70 @@ void processInput(GLFWwindow *window, Shader &shader) {
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         posY -= posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         posY += posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
         posY -= posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
         posY += posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
         posX += posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
         posX -= posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_COMMA) == GLFW_PRESS) {
         posZ += posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_PERIOD) == GLFW_PRESS) {
         posZ -= posStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
         rotX += rotStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
         rotX -= rotStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) {
         rotY += rotStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
         rotY -= rotStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT_BRACKET) == GLFW_PRESS) {
         rotZ += rotStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT_BRACKET) == GLFW_PRESS) {
         rotZ -= rotStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) {
         scal += scalStep;
+        sleep(sleepTime);
     }
     if (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) {
         scal -= scalStep;
         if (scal < 0.05) {
             scal = 0.05;
         }
+        sleep(sleepTime);
     }
 }
 
