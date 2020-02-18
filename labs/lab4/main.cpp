@@ -7,10 +7,32 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <csci441/shader.h>
+#include "csci441/Shader.h"
+#include "csci441/Matrix4.h"
+#include "csci441/Vector4.h"
+#include "csci441/Cube.h"
+#include "csci441/Cylinder.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+
+bool modeSwitch_p = false;
+bool modeSwitch_o = false;
+bool perspective = false;
+int objMode = 0;
+
+float posX = 0,
+      posY = 0,
+      posZ = -2,
+      scal = 1,
+      rotX = 0,
+      rotY = 0,
+      rotZ = 0;
+
+float camPosStep = 0.05,
+      posStep = 0.05,
+      scalStep = 0.05,
+      rotStep = 0.05;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -20,6 +42,71 @@ void processInput(GLFWwindow *window, Shader &shader) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        modeSwitch_o = true;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE && modeSwitch_o) {
+        objMode = (objMode + 1) % 2;
+        modeSwitch_o = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_SLASH) == GLFW_PRESS) {
+        modeSwitch_p = true;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_SLASH) == GLFW_RELEASE && modeSwitch_p) {
+        perspective = !perspective;
+        modeSwitch_p = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        posY -= posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        posY += posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        posY -= posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        posY += posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+        posX += posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+        posX -= posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_COMMA) == GLFW_PRESS) {
+        posZ += posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_PERIOD) == GLFW_PRESS) {
+        posZ -= posStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+        rotX += rotStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
+        rotX -= rotStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) {
+        rotY += rotStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
+        rotY -= rotStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_BRACKET) == GLFW_PRESS) {
+        rotZ += rotStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT_BRACKET) == GLFW_PRESS) {
+        rotZ -= rotStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) {
+        scal += scalStep;
+    }
+    if (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) {
+        scal -= scalStep;
+        if (scal < 0.05) {
+            scal = 0.05;
+        }
+    }
 }
 
 void errorCallback(int error, const char* description) {
@@ -28,10 +115,7 @@ void errorCallback(int error, const char* description) {
 
 int main(void) {
     GLFWwindow* window;
-
     glfwSetErrorCallback(errorCallback);
-
-    /* Initialize the library */
     if (!glfwInit()) { return -1; }
 
 #ifdef __APPLE__
@@ -41,114 +125,111 @@ int main(void) {
     glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #endif
 
-    /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Lab 4", NULL, NULL);
     if (!window) {
         glfwTerminate();
         return -1;
     }
 
-    /* Make the window's context current */
     glfwMakeContextCurrent(window);
-
-    // tell glfw what to do on resize
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
-    // init glad
     if (!gladLoadGL()) {
         std::cerr << "Failed to initialize OpenGL context" << std::endl;
         glfwTerminate();
         return -1;
     }
 
-    /* init the model */
-    float vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+    Cube cube1 = Cube(0, 0, 0.5);
+    Cylinder cylinder1 = Cylinder(0, 0, 1.5, 0.5);
 
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+    GLuint VBO_CUBE;
+    glGenBuffers(1, &VBO_CUBE);
+    GLuint VBO_CYL;
+    glGenBuffers(1, &VBO_CYL);
 
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f
-    };
-
-    // copy vertex data
-    GLuint VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // describe vertex layout
-    GLuint VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float),
-            (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float),
-            (void*)(3*sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    // create the shaders
-    Shader shader("../vert.glsl", "../frag.glsl");
-
-    // setup the textures
+    Shader shader("vert.glsl", "frag.glsl");
     shader.use();
 
-    // and use z-buffering
     glEnable(GL_DEPTH_TEST);
 
-    /* Loop until the user closes the window */
+    Matrix4 cam_M, scal_M, ortho_M, pers_M, ident_M;
+
+    ortho_M.toOrth(-2, 2, -2, 2, -6, 6);
+    pers_M.toPerspective(1, 1.01, 0.3);
+    ident_M.toIdent();
+
     while (!glfwWindowShouldClose(window)) {
-        // process input
         processInput(window, shader);
 
-        /* Render here */
+        switch (objMode) {
+            case 0:
+                glBindBuffer(GL_ARRAY_BUFFER, VBO_CUBE);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(cube1.v), cube1.v, GL_STATIC_DRAW);
+                break;
+
+            case 1:
+                glBindBuffer(GL_ARRAY_BUFFER, VBO_CYL);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(cylinder1.v), cylinder1.v, GL_STATIC_DRAW);
+                break;
+
+            default:
+                break;
+        }
+
+        GLuint VAO;
+        glGenVertexArrays(1, &VAO);
+        glBindVertexArray(VAO);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // activate shader
+        scal_M.toScale(scal);
+
+        cam_M.toCam(
+            Vector3(posX, posY, posZ),
+            Vector3(rotX, rotY, rotZ),
+            Vector3(0, 0, 0)
+        );
+
+        int scalMatLoc = glGetUniformLocation(shader.ID, "scalMat");
+        int camMatLoc = glGetUniformLocation(shader.ID, "camMat");
+        int orthoMatLoc = glGetUniformLocation(shader.ID, "orthoMat");
+        int persMatLoc = glGetUniformLocation(shader.ID, "persMat");
+
+        glUniformMatrix4fv(scalMatLoc, 1, true, scal_M.m);
+        glUniformMatrix4fv(camMatLoc, 1, true, cam_M.m);
+        glUniformMatrix4fv(orthoMatLoc, 1, true, ortho_M.m);
+        if (perspective) {
+            glUniformMatrix4fv(persMatLoc, 1, true, pers_M.m);
+        }
+        else {
+            glUniformMatrix4fv(persMatLoc, 1, true, ident_M.m);
+        }
+
         shader.use();
 
-        // render the cube
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices));
+        GLsizei size;
 
-        /* Swap front and back and poll for io events */
+        switch (objMode) {
+        case 0:
+            size = sizeof(cube1.v);
+            break;
+
+        case 1:
+            size = sizeof(cylinder1.v);
+            break;
+
+        default:
+            break;
+        }
+        glDrawArrays(GL_TRIANGLES, 0, size);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
