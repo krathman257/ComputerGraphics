@@ -58,7 +58,7 @@ Matrix4 processModel(const Matrix4& model, GLFWwindow *window) {
     else if (isPressed(window, '.')) { trans.translate(0,0,-TRANS); }
     // MODE
     else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) { modeSwitch = true; }
-    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE && modeSwitch) { mode = (mode + 1) % 2; modeSwitch = false; }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE && modeSwitch) { mode = (mode + 1) % 4; modeSwitch = false; }
 
     return trans * model;
 }
@@ -72,6 +72,24 @@ void processInput(Matrix4& model, GLFWwindow *window) {
 
 void errorCallback(int error, const char* description) {
     fprintf(stderr, "GLFW Error: %s\n", description);
+}
+
+void createBuffers(GLuint vbo, GLuint &vao, std::vector<float> coords) {
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, coords.size() * sizeof(float),
+        &coords[0], GL_STATIC_DRAW);
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
+        (void*)0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
+        (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
+        (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 }
 
 int main(void) {
@@ -107,50 +125,21 @@ int main(void) {
         return -1;
     }
 
-
     // create c
-    Cylinder cylinder(400, 1, .2, .4);
-    // Cone c(20, 1, .2, .4);
-    // Sphere c(20, .5, 1, .2, .4);
-    // Torus c(20, .75, .25, 1, .2, .4);
+    Cylinder cylinder(200, 1, .2, .4);
+    Cone cone(200, 1, .2, .4);
+    Sphere sphere(200, .5, 1, .2, .4);
     DiscoCube cube;
 
-    // copy vertex data
-    GLuint VBO_CYL;
-    glGenBuffers(1, &VBO_CYL);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_CYL);
-    glBufferData(GL_ARRAY_BUFFER, cylinder.coords.size()*sizeof(float),
-            &cylinder.coords[0], GL_STATIC_DRAW);
-    GLuint VAO_CYL;
-    glGenVertexArrays(1, &VAO_CYL);
-    glBindVertexArray(VAO_CYL);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
-        (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
-        (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
-        (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    GLuint VBO_CYL = 0, VAO_CYL = 0,
+        VBO_CONE = 0, VAO_CONE = 0,
+        VBO_SPHERE = 0, VAO_SPHERE = 0,
+        VBO_CUBE = 0, VAO_CUBE = 0;
 
-    GLuint VBO_CUBE;
-    glGenBuffers(1, &VBO_CUBE);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_CUBE);
-    glBufferData(GL_ARRAY_BUFFER, cube.coords.size()*sizeof(float),
-            &cube.coords[0], GL_STATIC_DRAW);
-    GLuint VAO_CUBE;
-    glGenVertexArrays(1, &VAO_CUBE);
-    glBindVertexArray(VAO_CUBE);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
-        (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
-        (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
-        (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    createBuffers(VBO_CYL, VAO_CYL, cylinder.coords);
+    createBuffers(VBO_CONE, VAO_CONE, cone.coords);
+    createBuffers(VBO_SPHERE, VAO_SPHERE, sphere.coords);
+    createBuffers(VBO_CUBE, VAO_CUBE, cube.coords);
 
     // setup projection
     Matrix4 projection;
@@ -217,6 +206,16 @@ int main(void) {
                 glBindBuffer(GL_ARRAY_BUFFER, VBO_CYL);
                 size = cylinder.coords.size() * sizeof(float);
                 glBindVertexArray(VAO_CYL);
+                break;
+            case 2:
+                glBindBuffer(GL_ARRAY_BUFFER, VBO_SPHERE);
+                size = sphere.coords.size() * sizeof(float);
+                glBindVertexArray(VAO_SPHERE);
+                break;
+            case 3:
+                glBindBuffer(GL_ARRAY_BUFFER, VBO_CONE);
+                size = cone.coords.size() * sizeof(float);
+                glBindVertexArray(VAO_CONE);
                 break;
             default:
                 break;

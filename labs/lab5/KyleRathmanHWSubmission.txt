@@ -1,0 +1,6 @@
+Name: Kyle Rathman
+
+
+URL: https://krathman257@bitbucket.org/krathman257/csci-441-spring2020.git
+
+Hash: e84076f6ba566814b3323dc7947452e361c85c13
