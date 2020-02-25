@@ -121,7 +121,6 @@ public:
         }
     }
 };
-/*
 
 class Cone {
 public:
@@ -145,15 +144,21 @@ public:
             double vip1_x = radius*cos(theta_ip1);
             double vip1_y = radius*sin(theta_ip1);
 
+            float norm_x = (vi_x + vip1_x) / 2.0f;
+            float norm_y = (vi_y + vip1_y) / 2.0f;
+
+            Vector3 normal = Vector3(norm_x, norm_y, 0.0f);
+            normal.normalize();
+
             // add triangle viL, viH, vip1L
-            add_vertex(coords, vi_x, vi_y, -h, r, g, b);
-            add_vertex(coords, c_x, c_y, h, r, g, b);
-            add_vertex(coords, vip1_x, vip1_y, -h, r, g, b);
+            add_vertex(coords,   vi_x,   vi_y, -h, normal.v[0], normal.v[1], normal.v[2], r, g, b);
+            add_vertex(coords,    c_x,    c_y,  h, normal.v[0], normal.v[1], normal.v[2], r, g, b);
+            add_vertex(coords, vip1_x, vip1_y, -h, normal.v[0], normal.v[1], normal.v[2], r, g, b);
 
             // // add low triangle vi, vip1, 0
-            add_vertex(coords, vip1_x, vip1_y, -h, r, g, b);
-            add_vertex(coords, c_x, c_y, -h, r, g, b);
-            add_vertex(coords, vi_x, vi_y, -h, r, g, b);
+            add_vertex(coords, vip1_x, vip1_y, -h, 0.0f, 0.0f, -1.0f, r, g, b);
+            add_vertex(coords,    c_x,    c_y, -h, 0.0f, 0.0f, -1.0f, r, g, b);
+            add_vertex(coords,   vi_x,   vi_y, -h, 0.0f, 0.0f, -1.0f, r, g, b);
         }
     }
 };
@@ -204,20 +209,27 @@ public:
                 double vip1jp1_y = y(radius, phi_ip1, theta_jp1);
                 double vip1jp1_z = z(radius, phi_ip1, theta_jp1);
 
-                // add triangle
-                add_vertex(coords, vij_x, vij_y, vij_z, r, g, b);
-                add_vertex(coords, vip1j_x, vip1j_y, vip1j_z, r, g, b);
-                add_vertex(coords, vijp1_x, vijp1_y, vijp1_z, r, g, b);
+                float norm_x = (vij_x + vip1j_x + vijp1_x + vip1jp1_x) / 4.0f;
+                float norm_y = (vij_y + vip1j_y + vijp1_y + vip1jp1_y) / 4.0f;
+                float norm_z = (vij_z + vip1j_z + vijp1_z + vip1jp1_z) / 4.0f;
 
-                // add triange
-                add_vertex(coords, vijp1_x, vijp1_y, vijp1_z, r, g, b);
-                add_vertex(coords, vip1jp1_x, vip1jp1_y, vip1jp1_z, r, g, b);
-                add_vertex(coords, vip1j_x, vip1j_y, vip1j_z, r, g, b);
+                Vector3 normal = Vector3(norm_x, norm_y, norm_z);
+                normal.normalize();
+
+                // add triangle
+                add_vertex(coords,   vij_x,   vij_y,   vij_z, normal.v[0], normal.v[1], normal.v[2], r, g, b);
+                add_vertex(coords, vip1j_x, vip1j_y, vip1j_z, normal.v[0], normal.v[1], normal.v[2], r, g, b);
+                add_vertex(coords, vijp1_x, vijp1_y, vijp1_z, normal.v[0], normal.v[1], normal.v[2], r, g, b);
+
+                // add triangle
+                add_vertex(coords,   vijp1_x,   vijp1_y,   vijp1_z, normal.v[0], normal.v[1], normal.v[2], r, g, b);
+                add_vertex(coords, vip1jp1_x, vip1jp1_y, vip1jp1_z, normal.v[0], normal.v[1], normal.v[2], r, g, b);
+                add_vertex(coords,   vip1j_x,   vip1j_y,   vip1j_z, normal.v[0], normal.v[1], normal.v[2], r, g, b);
             }
         }
     }
 };
-
+/*
 class Torus {
     double x(float c, float a, float phi, float theta){
         return (c+a*cos(theta))*cos(phi);
@@ -273,7 +285,7 @@ public:
                 add_vertex(coords, vip1j_x, vip1j_y, vip1j_z, r, g, b);
                 add_vertex(coords, vijp1_x, vijp1_y, vijp1_z, r, g, b);
 
-                // add triange
+                // add triangle
                 add_vertex(coords, vijp1_x, vijp1_y, vijp1_z, r, g, b);
                 add_vertex(coords, vip1jp1_x, vip1jp1_y, vip1jp1_z, r, g, b);
                 add_vertex(coords, vip1j_x, vip1j_y, vip1j_z, r, g, b);

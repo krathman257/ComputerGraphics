@@ -20,7 +20,7 @@ void main() {
     //Set initial vectors
     vec4 ourColor4 = vec4(ourColor, 1.0f);
     vec4 lightColor4 = vec4(lightColor, 1.0f);
-    vec4 lightPos4 = projection * camera * model * vec4(lightPos, 1.0f);
+    vec4 lightPos4 = projection * camera * vec4(lightPos, 1.0f);
     vec3 lightPosTrans = vec3(lightPos4.xyz);
 
     //Diffuse
