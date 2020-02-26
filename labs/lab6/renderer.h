@@ -1,7 +1,7 @@
 #ifndef _CSCI441_RENDERER_H_
 #define _CSCI441_RENDERER_H_
 
-#include <csci441/matrix3.h>
+#include "csci441/matrix3.h""
 
 class Renderer {
     Matrix3 itModel_tmp;

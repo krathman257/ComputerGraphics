@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <vector>
 
+const float M_PI = 3.141592653589793;
+
 template <typename T, typename N, typename C>
 void add_vertex(T& coords, const N& x, const N& y, const N& z,
         const C& r, const C& g, const C& b,

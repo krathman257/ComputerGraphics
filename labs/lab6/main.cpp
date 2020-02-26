@@ -7,11 +7,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <csci441/shader.h>
-#include <csci441/matrix4.h>
-#include <csci441/matrix3.h>
-#include <csci441/vector4.h>
-#include <csci441/uniform.h>
+#include "csci441/Shader.h"
+#include "csci441/Matrix4.h"
+#include "csci441/Matrix3.h"
+#include "csci441/Vector4.h"
+#include "csci441/uniform.h"
 
 #include "shape.h"
 #include "model.h"
@@ -113,7 +113,7 @@ int main(void) {
     // make a floor
     Model floor(
             DiscoCube().coords,
-            Shader("../vert.glsl", "../frag.glsl"));
+            Shader("D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab6\\vert.glsl", "D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab6\\frag.glsl"));
     Matrix4 floor_trans, floor_scale;
     floor_trans.translate(0, -2, 0);
     floor_scale.scale(100, 1, 100);
@@ -136,7 +136,7 @@ int main(void) {
     Renderer renderer;
 
     // set the light position
-    Vctor4 lightPos(3.75f, 3.75f, 4.0f);
+    Vector4 lightPos(3.75f, 3.75f, 4.0f);
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
