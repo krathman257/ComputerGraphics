@@ -3,8 +3,6 @@
 
 #include <sstream>
 
-#include <glm/glm.hpp>
-
 #include "vector4.h"
 
 class Matrix4 {
@@ -12,20 +10,13 @@ private:
     unsigned int idx(unsigned int r, unsigned int c) const {
         return r + c*4;
     }
+    const float M_PI = 3.141592653589793;
 
 public:
     float values[16];
 
     Matrix4() {
         set_to_identity();
-    };
-
-    Matrix4(const glm::mat4& m) {
-        for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 4; ++j) {
-                values[idx(i,j)] = m[j][i];
-            }
-        }
     };
 
     float operator()(int row, int col) const {
@@ -153,6 +144,12 @@ public:
             ret.values[i] = dot(values, i, v.values, 0);
         }
         return ret;
+    }
+
+    void operator=(const Matrix4& m) {
+        for (int i = 0; i < 16; i++) {
+            values[i] = m.values[i];
+        }
     }
 
     std::string to_string()  const {

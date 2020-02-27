@@ -104,20 +104,20 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 | 2/11 | [Projections](./notes/02-11.pdf)                                   | [Lab 4](./labs/lab4)  | [Lab 3](./labs/lab3)  | LoGL Ch 7                                     |
 | 2/13 | [Camera](./notes/02-13.pdf)                                        |                       |                       | LoGL Ch 7                                     |
 |      |                                                                    |                       |                       |                                               |
-| 2/18 |  Shading                                                           |  Lab 5                | [Lab 4](./labs/lab4)  | LoGL Ch 10                                    |
-| 2/20 |  Shading                                                           |                       |                       | LoGL Ch 10                                    |
+| 2/18 | [Basic Shading](./notes/02-18.pdf)                                 | [Lab 5](./labs/lab5)  | [Lab 4](./labs/lab4)  | LoGL Ch 10                                    |
+| 2/20 | [Phong Shading](./notes/02-20.pdf)                                 |                       |                       | LoGL Ch 10                                    |
 |      |                                                                    |                       |                       |                                               |
-| 2/25 |                                                                    |  Lab 6                |  Lab 5                |                                               |
-| 2/27 |                                                                    |                       |                       |                                               |
+| 2/25 |  Triangulation Data Structs                                        | [Lab 6](./labs/lab6)  | [Lab 5](./labs/lab5)  | LoGL Ch 12                                    |
+| 2/27 |  Texture Mapping                                                   |                       |                       | LoGL Ch 11                                    |
 
 ### March
 
 | Date | Description                                                        | Assigned              | Due                   | Recommended Reading                           |
 |------|--------------------------------------------------------------------|-----------------------|-----------------------|-----------------------------------------------|
-| 3/03 |                                                                    |  Lab 7                |  Lab 6                |                                               |
+| 3/03 |  Texture Mapping                                                   | [Lab 7](./labs/lab7)  | [Lab 6](./labs/lab6)  | LoGL Ch 11                                    |
 | 3/05 |                                                                    |                       |                       |                                               |
 |      |                                                                    |                       |                       |                                               |
-| 3/10 |                                                                    |  Proj 1               |  Lab 7                |                                               |
+| 3/10 |                                                                    |  Proj 1               | [Lab 7](./labs/lab7)  |                                               |
 | 3/12 | Midterm                                                            |                       |                       |                                               |
 |      |                                                                    |                       |                       |                                               |
 | 3/17 | No class (Spring Break)                                            |                       |                       |                                               |
@@ -156,7 +156,6 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 
 Below are the topics that may be covered in the future:
 
-- Phong Shading
 - Texture mapping
 - Ray Tracing
 - Quaternions
