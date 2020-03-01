@@ -5,7 +5,6 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <cmath>
 
 class Shader {
     // adapted from shader loading code presented in
