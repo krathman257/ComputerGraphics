@@ -6,6 +6,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
 
 #include "csci441/Shader.h"
 #include "csci441/Matrix4.h"
@@ -20,6 +23,13 @@
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 960;
+
+const char *duckPath = "models\\duck.obj";
+const char *vertPath = "vert.glsl";
+const char *fragPath = "frag.glsl";
+
+bool modeSwitch = false;
+int mode = 0;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -57,6 +67,9 @@ Matrix4 processModel(const Matrix4& model, GLFWwindow *window) {
     else if (isPressed(window, GLFW_KEY_RIGHT)) { trans.translate(TRANS, 0, 0); }
     else if (isPressed(window, ',')) { trans.translate(0,0,TRANS); }
     else if (isPressed(window, '.')) { trans.translate(0,0,-TRANS); }
+    // SWITCH MODE
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) { modeSwitch = true; }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE && modeSwitch) { mode = (mode + 1) % 2; modeSwitch = false; }
 
     return trans * model;
 }
@@ -70,6 +83,80 @@ void processInput(Matrix4& model, GLFWwindow *window) {
 
 void errorCallback(int error, const char* description) {
     fprintf(stderr, "GLFW Error: %s\n", description);
+}
+
+// Opening OBJ file process modified from:
+// http://www.opengl-tutorial.org/beginners-tutorials/tutorial-7-model-loading/#reading-the-file
+
+std::vector<glm::vec3> vertices;
+std::vector<glm::vec3> triangles;
+std::vector<glm::vec3> justVertices;
+std::vector<std::vector<float>> fullVertices;
+
+bool readObjFile(const char* filePath) {
+    std::vector<glm::vec3> temp_vertices;
+    std::vector<unsigned int> vertexIndices;
+
+    FILE* file = fopen(filePath, "r");
+    if (file == NULL) {
+        std::cout << "Unable to open OBJ file" << std::endl;
+        return false;
+    }
+
+    while (true) {
+        char lineHeader[128];
+        int res = fscanf(file, "%s", lineHeader);
+        if (res == EOF) {
+            break;
+        }
+        if (strcmp(lineHeader, "v") == 0) {
+            glm::vec3 vertex;
+            fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+            vertices.push_back(vertex);
+        }
+        else if (strcmp(lineHeader, "f") == 0) {
+            glm::vec3 triangle;
+            fscanf(file, "%f %f %f\n", &triangle.x, &triangle.y, &triangle.z);
+            triangles.push_back(triangle);            
+        }
+    }
+
+    for (int i = 0; i < vertices.size(); i++) {
+        float count = 1.0f;
+        std::vector<float> fullVertex;
+        fullVertex.push_back(vertices[i][0]);
+        fullVertex.push_back(vertices[i][1]);
+        fullVertex.push_back(vertices[i][2]);
+        fullVertex.push_back(1.0f);
+        fullVertex.push_back(1.0f);
+        fullVertex.push_back(0.0f);
+        
+        glm::vec3 normalAverage, temp_normal;
+        for (int t = 0; t < triangles.size(); t++) {
+            glm::vec3 a = vertices[triangles[t].x-1];
+            glm::vec3 b = vertices[triangles[t].y-1];
+            glm::vec3 c = vertices[triangles[t].z-1];
+            if (triangles[t].x-1 == i) {
+                temp_normal = glm::cross(a - b, a - c);
+                normalAverage += (temp_normal - normalAverage) / count++;
+            }
+            else if (triangles[t].y-1 == i) {
+                temp_normal = glm::cross(b - c, b - a);
+                normalAverage += (temp_normal - normalAverage) / count++;
+            }
+            else if (triangles[t].z-1 == i) {
+                temp_normal = glm::cross(c - a, c - b);
+                normalAverage += (temp_normal - normalAverage) / count++;
+            }
+        }
+        glm::normalize(normalAverage);
+
+        fullVertex.push_back(normalAverage.x);
+        fullVertex.push_back(normalAverage.y);
+        fullVertex.push_back(normalAverage.z);
+        
+        fullVertices.push_back(fullVertex);
+    }
 }
 
 int main(void) {
@@ -105,15 +192,23 @@ int main(void) {
         return -1;
     }
 
-    // create obj
-    Model obj(
-            Torus(40, .75, .5, 1, .2, .4).coords,
-            Shader("../vert.glsl", "../frag.glsl"));
+    //Read in duck
+    readObjFile(duckPath);
+    
+    Model objFlat(
+        CustomObj(fullVertices, triangles, true).coords,
+        Shader(vertPath, fragPath));
+    objFlat.model.scale(0.001, 0.001, 0.001);
+    
+    Model objSmooth(
+        CustomObj(fullVertices, triangles, false).coords,
+        Shader(vertPath, fragPath));
+    objSmooth.model.scale(0.001, 0.001, 0.001);
 
     // make a floor
     Model floor(
             DiscoCube().coords,
-            Shader("D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab6\\vert.glsl", "D:\\Krathman\\Desktop\\Homework\\Computer Graphics\\labs\\lab6\\frag.glsl"));
+            Shader(vertPath, fragPath));
     Matrix4 floor_trans, floor_scale;
     floor_trans.translate(0, -2, 0);
     floor_scale.scale(100, 1, 100);
@@ -141,14 +236,24 @@ int main(void) {
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
         // process input
-        processInput(obj.model, window);
+        processInput(objFlat.model, window);
+        processInput(objSmooth.model, window);
 
         /* Render here */
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // render the object and the floor
-        renderer.render(camera, obj, lightPos);
+        switch (mode) {
+        case 0:
+            renderer.render(camera, objFlat, lightPos);
+            break;
+        case 1:
+            renderer.render(camera, objSmooth, lightPos);
+            break;
+        default:
+            break;
+        }
         renderer.render(camera, floor, lightPos);
 
         /* Swap front and back and poll for io events */

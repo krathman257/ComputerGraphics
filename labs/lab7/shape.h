@@ -4,6 +4,9 @@
 #include <cstdlib>
 #include <vector>
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 struct Vertex {
     double x, y, z, u, v;
 };
