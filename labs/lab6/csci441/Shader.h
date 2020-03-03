@@ -70,8 +70,8 @@ protected:
         stream.close();
 
         std::string source = buffer.str();
-        std::cout << "Source:" << std::endl;
-        std::cout << source << std::endl;
+        //std::cout << "Source:" << std::endl;
+        //std::cout << source << std::endl;
 
         GLuint shader = glCreateShader(shaderType);
         const char* src_ptr = source.c_str();
