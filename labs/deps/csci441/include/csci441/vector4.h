@@ -49,7 +49,8 @@ public:
         return Vector4(
                  det(values[Y], values[Z], v.values[Y], v.values[Z]),
                 -det(values[X], values[Z], v.values[X], v.values[Z]),
-                 det(values[X], values[Y], v.values[X], v.values[Y]));
+                 det(values[X], values[Y], v.values[X], v.values[Y]),
+                 0);
     }
 
     double norm() const {
