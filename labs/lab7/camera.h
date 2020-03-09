@@ -1,8 +1,8 @@
 #ifndef _CSCI441_CAMERA_H_
 #define _CSCI441_CAMERA_H_
 
-#include <csci441/matrix4.h>
-#include <csci441/vector4.h>
+#include "csci441/matrix4.h"
+#include "csci441/vector4.h"
 
 class Camera {
 public:
