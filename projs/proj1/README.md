@@ -1,6 +1,6 @@
 # Maze Controls
 
-The Stone Pillar marks the beginning of the maze
+The Stone Pillar marks the beginning of the maze. 
 The Stone Icosphere marks the end of the maze
 
 * SPACE - Switch between Bird's-Eye view and Camera view
