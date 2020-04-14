@@ -60,7 +60,8 @@ struct Ray {
 void render(bitmap_image& image, const std::vector<Sphere>& world, int mode=0, float perspDist=1) {
 
     Viewport view = Viewport(glm::vec2(-5, -5), glm::vec2(5, 5));
-    rgb_t background = make_colour(75, 156, 211);
+    //rgb_t background = make_colour(75, 156, 211);
+    rgb_t background = make_colour(0, 0, 0);
     float w = image.width(), h = image.height();
 
     for (int i = 0; i < image.width(); i++) {
@@ -108,10 +109,18 @@ int main(int argc, char** argv) {
     bitmap_image image(640, 480);
 
     // build world
-    std::vector<Sphere> world = {
+    /*std::vector<Sphere> world = {
         Sphere(glm::vec3(0, 0, 1), 1, glm::vec3(1,1,0)),
         Sphere(glm::vec3(1, 1, 4), 2, glm::vec3(0,1,1)),
         Sphere(glm::vec3(2, 2, 6), 3, glm::vec3(1,0,1)),
+    };*/
+    std::vector<Sphere> world = {
+        Sphere(glm::vec3( 0, -2,   1), 1.65, glm::vec3(0.84, 0.65, 0.59)),
+        Sphere(glm::vec3( 2,  0,   2), 1.65, glm::vec3(0.83, 0.61, 0.52)),
+        Sphere(glm::vec3(-2,  0,   2), 1.65, glm::vec3(0.66, 0.48, 0.43)),
+        Sphere(glm::vec3( 0,  2,   3), 1.65, glm::vec3(0.88, 0.72, 0.65)),
+        Sphere(glm::vec3(-1, -4, 0.5),  0.5, glm::vec3(0.81, 0.62, 0.52)),
+        Sphere(glm::vec3( 1, -4, 0.5),  0.5, glm::vec3(0.82, 0.63, 0.54))
     };
 
     // render the world
