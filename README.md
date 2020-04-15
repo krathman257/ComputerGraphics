@@ -135,13 +135,13 @@ the current plan. Assignments and due dates will be updated as they're assigned 
 |------|--------------------------------------------------------------------|-----------------------|---------------------------|----------------------|-------|
 | 4/02 | [Intersections](./notes/04-02.pdf)                                 |                       |                           | LoGL Ch 4            | [1](https://montana.webex.com/recordingservice/sites/montana/recording/playback/f6567727ee914ae3a1795a228ee2bea7) of 1 |
 |      |                                                                    |                       |                           |                      |
-| 4/07 |                                                                    |  Lab 8                | [Proj 1](./projs/proj1)   |                      |
-| 4/09 |                                                                    |                       |                           |                      |
+| 4/07 | [Intersections & Ray Tracing Algo](./notes/04-07.pdf)              | [Lab 8](./labs/lab8)  | [Proj 1](./projs/proj1)   |                      | [1](https://montana.webex.com/recordingservice/sites/montana/recording/playback/6f2d1b039b57498a90f649115feb2f98) of 1 |
+| 4/09 | [Shadows, Shading, Mirrors & Boxes](./notes/04-09.pdf)             |                       |                           |                      | [1](https://montana.webex.com/recordingservice/sites/montana/recording/playback/2face8458d194b3b80b97c8c2ab658c2) of 1 |
 |      |                                                                    |                       |                           |                      |
-| 4/14 |                                                                    |  Lab 9                |  Lab 8                    |                      |
+| 4/14 |                                                                    | [Lab 9](./labs/lab9)  | [Lab 8](./labs/lab8)      |                      |
 | 4/16 |                                                                    |                       |                           |                      |
 |      |                                                                    |                       |                           |                      |
-| 4/21 |                                                                    |  Proj 2               |  Lab 9                    |                      |
+| 4/21 |                                                                    |  Proj 2               | [Lab 9](./labs/lab9)      |                      |
 | 4/23 |                                                                    |                       |                           |                      |
 |      |                                                                    |                       |                           |                      |
 | 4/28 |                                                                    |                       |                           |                      |
