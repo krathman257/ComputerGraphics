@@ -14,7 +14,7 @@ private:
 
     template <typename InputIter>
     void push_back(InputIter begin, InputIter end) {
-        for (InputIter i = begin ; i != end ; ++i) {
+        for (InputIter i = begin; i != end; ++i) {
             _shapes.push_back(&(*i));
         }
     }
@@ -40,7 +40,7 @@ public:
 
     template <typename InputIter>
     void append(InputIter begin, InputIter end) {
-        for (InputIter o = begin ; o != end ; ++o) {
+        for (InputIter o = begin; o != end; ++o) {
             append(*o);
         }
     }

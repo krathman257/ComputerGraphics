@@ -72,6 +72,17 @@ class Renderer {
         return shade(camera, lights, hit);
     }
 
+    glm::vec3 render_pixel(
+        const Camera& camera,
+        const Lights& lights,
+        const std::vector<BoundingBox>& bb,
+        const Ray& ray
+    ) {
+
+        Hit hit = _intersector->find_first_intersection(bb, ray);
+        return shade(camera, lights, hit);
+    }
+
 public:
 
     Renderer(Intersector* intersector) : _intersector(intersector) { }
@@ -87,6 +98,21 @@ public:
                 Ray ray = camera.make_ray(image.width(), image.height(), x, y);
                 glm::vec3 c = render_pixel(camera, lights, world, ray);
                 image.set_pixel(x, image.height()-y-1, to_color(c));
+            }
+        }
+    }
+
+    void render(
+        bitmap_image& image,
+        const Camera& camera,
+        const Lights& lights,
+        const std::vector<BoundingBox>& bb
+    ) {
+        for (int y = 0; y < image.height(); ++y) {
+            for (int x = 0; x < image.width(); ++x) {
+                Ray ray = camera.make_ray(image.width(), image.height(), x, y);
+                glm::vec3 c = render_pixel(camera, lights, bb, ray);
+                image.set_pixel(x, image.height() - y - 1, to_color(c));
             }
         }
     }

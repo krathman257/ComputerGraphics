@@ -2,6 +2,7 @@
 #define _CSCI441_SHAPE_H_
 
 #include <glm/glm.hpp>
+#include "ray.h"
 
 class Shape {
 private:
@@ -84,6 +85,10 @@ public:
     virtual double intersect(const Ray& r, double zero, double inf) const {
         return inf;
     }
+
+    virtual std::string toString() const {
+        return "Empty shape";
+    }
 };
 
 
@@ -110,6 +115,17 @@ public:
     }
 
     glm::vec3 center() const { return _center; }
+
+    float radius() const { return _radius; }
+    float diameter() const { return _radius * 2.0f; }
+
+    std::string toString() const { 
+        return "Sphere";
+    }
+
+    double intersect(const Ray& r) {
+        return intersect(r, default_zero(), default_inf());
+    }
 
     double intersect(const Ray& r, double zero, double inf) const {
         double t = inf;
@@ -152,12 +168,20 @@ public:
         const glm::vec3& color=glm::vec3(0,0,0)
     ) : Shape(), _a(a), _b(b), _c(c), _color(color) {}
 
-    glm::vec3 normal(const glm::vec3&) const {
+    glm::vec3 normal(const glm::vec3& p) const {
         return glm::normalize(glm::cross(_b-_a, _c-_a));
     }
 
     glm::vec3 color(const glm::vec3&) const {
         return _color;
+    }
+
+    std::string toString() const {
+        return "Triangle";
+    }
+
+    double intersect(const Ray& r) {
+        return intersect(r, default_zero(), default_inf());
     }
 
     double intersect(const Ray& r, double zero, double inf) const {

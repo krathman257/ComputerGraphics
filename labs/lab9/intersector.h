@@ -12,6 +12,7 @@ class Intersector {
 public:
     virtual ~Intersector() { }
 
+    virtual Hit find_first_intersection(const std::vector<BoundingBox>& bb, const Ray& ray) = 0;
     virtual Hit find_first_intersection(const World& world, const Ray& ray) = 0;
 };
 
