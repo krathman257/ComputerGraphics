@@ -81,7 +81,7 @@ an nx x ny pixel image and with a viewport defined by a box with a min point of
 in our simplified camera model since the viewport is on the *xy*-plane, we have
 `rij.origin = (ui, vi, 0)`.  And for an orthographic camera with basis (u, v,
 w), we have the direction of each ray is *-w*.   In our simplified camera model,
-since w = (0,0,1), each ray has direction (0,0,-1).
+since w = (0,0,-1), each ray has direction (0,0,1).
 
 ## Part 3b - Finding the first intersection
 
