@@ -13,9 +13,13 @@ Once the program has its arguments, the image will be rendered. Progress is show
 ## Non-Trivial Features Added
 
 -Mapping textures to spheres
+
 -Loading .OBJ file as a vector of triangles
+
 -Normal smoothing for .OBJ imports
+
 -Reflections
+
 -Procedural texture generations with Perlin noise
 
 ## Example Input
