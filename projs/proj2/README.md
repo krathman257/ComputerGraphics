@@ -20,7 +20,13 @@ Once the program has its arguments, the image will be rendered. Progress is show
 
 -Reflections
 
--Procedural texture generations with Perlin noise
+-Procedural texture generation with Perlin noise
+
+## Notes
+
+Rendering can take a long time, particularly with the detailed model. At 2048X1536, an image with the detailed model, normal smoothing and reflections took around 90 minutes to render, though at lower resolutions, rendering can take less than 1 minute.
+
+The space ships can be difficult to make out with reflections turned on, as they become perfectly reflective surfaces. Turning reflections off will make them easier to see.
 
 ## Example Input
 
@@ -60,10 +66,3 @@ Rendering image...
 1.16667
 
 ...
-
-## Notes
-
-Rendering can take a long time, particularly with the detailed model. At 2048X1536, an image with the detailed model, normal smoothing and reflections took around 90 minutes to render, though at lower resolutions, rendering can take less than 1 minute.
-
-The space ships can be difficult to make out with reflections turned on, as they become perfectly reflective surfaces. Turning reflections off will make them easier to see.
-
