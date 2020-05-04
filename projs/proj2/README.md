@@ -13,22 +13,40 @@ Once the program has its arguments, the image will be rendered. Progress is show
 ## Example Input
 
 Enter a resolution to be rendered at (Suggest 320 240, 800 600, 2048 1536):
+
 800 600
+
 Simple or detailed model? (0=Simple, 1=Detailed)
+
 1
+
 Normal smoothing? (0=No, 1=Yes)
+
+
 0
+
 Reflections? (0=No, 1=Yes)
+
 1
+
 Rendering image...
+
 0
+
 0.166667
+
 0.333333
+
 0.5
+
 0.666667
+
 0.833333
+
 1
+
 1.16667
+
 ...
 
 ## Notes
