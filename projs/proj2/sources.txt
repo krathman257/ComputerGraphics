@@ -1,0 +1,4 @@
+https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
+http://www.opengl-tutorial.org/beginners-tutorials/tutorial-7-model-loading/#reading-the-file
+https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel
+https://rtouti.github.io/graphics/perlin-noise-algorithm
