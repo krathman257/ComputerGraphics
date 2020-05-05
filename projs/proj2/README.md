@@ -16,9 +16,9 @@ This program renders a scene in outer space, featuring a gas planet, an Earth-li
 
 ## Notes
 
-Rendering can take a long time, particularly with the detailed model. At 2048X1536, an image with the detailed model, normal smoothing and reflections took around 90 minutes to render, though at lower resolutions, rendering can take less than 1 minute.
+Rendering can take a long time, particularly with the detailed model (as it has significantly more polygons than the simple version). At 2048X1536, an image with the detailed model, normal smoothing and reflections took around 90 minutes to render, though at lower resolutions, rendering can take less than 1 minute.
 
-The space ships can be difficult to make out with reflections turned on, as they become perfectly reflective surfaces. Turning reflections off will make them easier to see.
+The spaceships can be difficult to see with reflections turned on, as they become perfectly reflective surfaces. Turning reflections off will make them easier to see.
 
 ## Usage
 
