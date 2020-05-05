@@ -16,8 +16,8 @@
 #include "texture.h"
 #include "timer.h"
 
-std::string projectPath = "C:\\Users\\Krathman257\\Desktop\\Homework\\Computer Graphics\\projs\\proj2\\";
-//std::string projectPath = "\\";
+//std::string projectPath = "C:\\Users\\Krathman257\\Desktop\\Homework\\Computer Graphics\\projs\\proj2\\";
+std::string projectPath = "";
 
 class MyIntersector : public Intersector {
 public:
