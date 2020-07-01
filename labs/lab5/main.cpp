@@ -125,7 +125,8 @@ int main(void) {
         return -1;
     }
 
-    // create c
+    /* Create primitives */
+
     Cylinder cylinder(200, 1, .2, .4);
     Cone cone(200, 1, .2, .4);
     Sphere sphere(200, .5, 1, .2, .4);
